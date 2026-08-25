@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="CineAI - Discover movies, get recommendations, and analyze movies with AI."
+    />
+
+    <title>CineAI | Movie Discovery & AI Analysis</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- Background -->
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+    <!-- Mobile Overlay -->
+
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">🎬</div>
+
+        <div class="brand-text">
+          <h2>CineAI</h2>
+          <span>Movie Intelligence</span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+
+      <nav class="navigation">
+        <button class="nav-item active" data-view="home">
+          <span class="nav-icon">⌂</span>
+          <span>Home</span>
+        </button>
+
+        <button class="nav-item" data-view="search">
+          <span class="nav-icon">⌕</span>
+          <span>Explore Movies</span>
+        </button>
+
+        <button class="nav-item" data-view="ai">
+          <span class="nav-icon">✦</span>
+          <span>AI Movie Analyzer</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-divider"></div>
+
+      <!-- Categories -->
+
+      <div class="sidebar-section">
+        <p class="sidebar-label">DISCOVER</p>
+
+        <button class="category-link active-category" data-category="trending">
+          <span>🔥</span>
+          Trending
+        </button>
+
+        <button class="category-link" data-category="popular">
+          <span>⭐</span>
+          Popular
+        </button>
+
+        <button class="category-link" data-category="top_rated">
+          <span>🏆</span>
+          Top Rated
+        </button>
+
+        <button class="category-link" data-category="now_playing">
+          <span>🎞️</span>
+          Now Playing
+        </button>
+
+        <button class="category-link" data-category="upcoming">
+          <span>🚀</span>
+          Upcoming
+        </button>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="api-status">
+          <span id="statusIndicator" class="status-indicator"></span>
+
+          <span id="apiStatusText"> Checking API... </span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- =========================
+         MOBILE HEADER
+    ========================== -->
+
+    <header class="mobile-header">
+      <div class="brand">
+        <div class="brand-icon">🎬</div>
+
+        <h2>CineAI</h2>
+      </div>
+
+      <button
+        id="mobileMenuButton"
+        class="mobile-menu-button"
+        aria-label="Open navigation menu"
+      >
+        ☰
+      </button>
+    </header>
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main-content">
+      <!-- =========================
+           HOME VIEW
+      ========================== -->
+
+      <section id="homeView" class="view active-view">
+        <!-- Hero -->
+
+        <div class="hero-section">
+          <div class="hero-content">
+            <div class="hero-badge">
+              <span></span>
+
+              Powered by AI
+            </div>
+
+            <h1>
+              Discover Movies.
+              <br />
+
+              <span> Powered by Intelligence. </span>
+            </h1>
+
+            <p>
+              Explore thousands of movies, discover intelligent recommendations,
+              and unlock detailed AI-powered movie insights.
+            </p>
+
+            <div class="hero-actions">
+              <button class="primary-button" id="exploreButton">
+                Explore Movies
+                <span>→</span>
+              </button>
+
+              <button class="secondary-button" id="analyzeButton">
+                ✦ Analyze with AI
+              </button>
+            </div>
+          </div>
+
+          <div class="hero-decoration">
+            <div class="floating-card card-one">⭐</div>
+
+            <div class="floating-card card-two">🎬</div>
+
+            <div class="floating-card card-three">✦</div>
+          </div>
+        </div>
+
+        <!-- Home Search -->
+
+        <div class="home-search-container">
+          <div class="search-box">
+            <span class="search-icon"> ⌕ </span>
+
+            <input
+              type="text"
+              id="homeSearchInput"
+              placeholder="Search for movies..."
+              autocomplete="off"
+            />
+
+            <button id="homeSearchButton">Search</button>
+          </div>
+        </div>
+
+        <!-- Movies -->
+
+        <section class="content-section">
+          <div class="section-header">
+            <div>
+              <p class="section-eyebrow">DISCOVER</p>
+
+              <h2 id="homeCategoryTitle">Trending Movies</h2>
+            </div>
+
+            <button class="view-more" id="refreshHomeButton">↻ Refresh</button>
+          </div>
+
+          <div id="homeMoviesGrid" class="movies-grid"></div>
+        </section>
+      </section>
+
+      <!-- =========================
+           SEARCH VIEW
+      ========================== -->
+
+      <section id="searchView" class="view">
+        <div class="page-header">
+          <div>
+            <p class="section-eyebrow">EXPLORE</p>
+
+            <h1>Find Your Next Movie</h1>
+
+            <p>Search thousands of movies and discover something amazing.</p>
+          </div>
+        </div>
+
+        <div class="large-search-container">
+          <div class="large-search-box">
+            <span>⌕</span>
+
+            <input
+              type="text"
+              id="movieSearchInput"
+              placeholder="Try Inception, Avengers, Batman..."
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <!-- Suggestions -->
+
+        <div id="suggestionsContainer" class="suggestions-container hidden">
+          <p>Suggestions</p>
+
+          <div id="suggestionsList"></div>
+        </div>
+
+        <div class="search-results-header">
+          <h2>Search Results</h2>
+
+          <span id="resultsCount"></span>
+        </div>
+
+        <div id="searchMoviesGrid" class="movies-grid">
+          <div class="empty-state">
+            <div class="empty-icon">🎬</div>
+
+            <h3>Start Exploring</h3>
+
+            <p>Search for a movie to discover details and recommendations.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================
+           DETAILS VIEW
+      ========================== -->
+
+      <section id="detailsView" class="view">
+        <button id="backButton" class="back-button">← Back to Movies</button>
+
+        <div id="movieDetailsContainer"></div>
+
+        <!-- TF-IDF Recommendations -->
+
+        <section class="recommendations-section">
+          <div class="section-header">
+            <div>
+              <p class="section-eyebrow">INTELLIGENT RECOMMENDATIONS</p>
+
+              <h2>Similar Movies</h2>
+            </div>
+          </div>
+
+          <div id="tfidfRecommendations" class="movies-grid"></div>
+        </section>
+
+        <!-- Genre Recommendations -->
+
+        <section class="recommendations-section">
+          <div class="section-header">
+            <div>
+              <p class="section-eyebrow">MORE TO EXPLORE</p>
+
+              <h2>More Like This</h2>
+            </div>
+          </div>
+
+          <div id="genreRecommendations" class="movies-grid"></div>
+        </section>
+      </section>
+
+      <!-- =========================
+           AI VIEW
+      ========================== -->
+
+      <section id="aiView" class="view">
+        <div class="ai-header">
+          <div class="ai-icon">✦</div>
+
+          <p class="section-eyebrow">ARTIFICIAL INTELLIGENCE</p>
+
+          <h1>AI Movie Analyzer</h1>
+
+          <p>
+            Enter a movie name or ask a question about a movie. CineAI will
+            generate an intelligent report covering the story, themes,
+            characters, strengths and more.
+          </p>
+        </div>
+
+        <div class="ai-input-card">
+          <textarea
+            id="aiMovieInput"
+            placeholder="Ask CineAI about a movie... Example: Analyze Interstellar and explain its themes"
+          ></textarea>
+
+          <div class="ai-input-footer">
+            <span> Powered by Mistral AI • Press Ctrl + Enter </span>
+
+            <button id="aiAnalyzeButton" class="primary-button">
+              Analyze Movie
+              <span>✦</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="quick-examples">
+          <span> Try: </span>
+
+          <button class="example-button">Inception</button>
+
+          <button class="example-button">Interstellar</button>
+
+          <button class="example-button">3 Idiots</button>
+
+          <button class="example-button">The Dark Knight</button>
+        </div>
+
+        <!-- AI Result -->
+
+        <div id="aiResultContainer" class="ai-result-container hidden">
+          <div class="ai-result-header">
+            <div class="ai-result-title">
+              <div class="small-ai-icon">✦</div>
+
+              <div>
+                <p>CINEAI ANALYSIS</p>
+
+                <h2>Movie Intelligence Report</h2>
+              </div>
+            </div>
+
+            <button id="copyAiResult" class="icon-button" title="Copy analysis">
+              ⧉
+            </button>
+          </div>
+
+          <div id="aiResult" class="ai-result"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- =========================
+         LOADING OVERLAY
+    ========================== -->
+
+    <div id="loadingOverlay" class="loading-overlay hidden">
+      <div class="loader-card">
+        <div class="cinema-loader">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <h3 id="loadingText">Loading...</h3>
+
+        <p>CineAI is working its magic</p>
+      </div>
+    </div>
+
+    <!-- =========================
+         TOAST
+    ========================== -->
+
+    <div id="toast" class="toast">
+      <span id="toastMessage"></span>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
